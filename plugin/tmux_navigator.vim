@@ -8,11 +8,18 @@ endif
 let g:loaded_tmux_navigator = 1
 
 function! s:VimNavigate(direction)
-  try
-    execute 'wincmd ' . a:direction
-  catch
-    echohl ErrorMsg | echo 'E11: Invalid in command-line window; <CR> executes, CTRL-C quits: wincmd k' | echohl None
-  endtry
+  if a:direction == "j"
+      execute 'bprev'
+  elseif a:direction == "k"
+      execute 'bnext'
+  else
+    try
+      "execute 'wincmd ' . a:direction
+      execute 'wincmd ' . a:direction
+    catch
+      echohl ErrorMsg | echo 'E11: Invalid in command-line window; <CR> executes, CTRL-C quits: wincmd k' | echohl None
+    endtry
+  endif
 endfunction
 
 if !get(g:, 'tmux_navigator_no_mappings', 0)
